@@ -23,6 +23,10 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/newUser',{
+            templateUrl: 'views/landingpage.html',
+            controller: 'LandingpageCtrl'
+      })
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'

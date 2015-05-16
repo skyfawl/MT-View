@@ -7,20 +7,20 @@
  * # MainCtrl
  * Controller of the mtViewApp
  */
-angular.module('mtViewApp')
-  .controller('MainCtrl', ['$scope','user', function ($scope,user) {
+ angular.module('mtViewApp')
+ .controller('MainCtrl', ['$scope','$location','user', function ($scope,$location,user) {
 
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
 
-   		var newUser =  user.initNewUser();
-   		newUser.then(function(response){
-    			var data = response.data;
-    			user['user'] = data['new_user'];
-    			console.log(user.isGuest());
-    		});
-    	
-  }]);
+ 	var newUser =  user.initNewUser();
+
+ 	newUser.then(function(response){
+ 		var data = response.data;
+ 		user['user'] = data['new_user'];
+ 		var isGuest = user.isGuest();
+ 		if(isGuest){
+ 			$location.url('/newUser');
+ 			$location.replace();
+ 		}
+ 	});
+
+ }]);
