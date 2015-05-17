@@ -8,14 +8,37 @@
  * Controller of the mtViewApp
  */
  angular.module('mtViewApp')
- .controller('LandingpageCtrl',['$scope','user',function ($scope,user) {
+ .controller('LandingpageCtrl',['$scope','UserService','MTservice',function ($scope,UserService,MTservice) {
  	
- 	$scope.user = user.getCurrentUser();
+ 	$scope.user = UserService.getCurrentUser();
  	$scope.wchd = [];
  	$scope.fav = [];
 
  	$scope.user.fav = $scope.fav;
  	$scope.user.wchd = $scope.wchd;
- 	console.log(user.user);
+ 	
+ 	MTservice.getLatestMovies().then(function(response){
+ 		response = response.data;
+ 		$scope.latest = response.results;
+ 	});
+
+ 	$scope.addToLst = function(movie,lstType){
+ 		MTservice.addToLst(movie,lstType).then(function(response){
+ 			response = response.data;
+ 			if(response.stts != 1){
+ 				console.log("Added to List");
+ 			}
+ 		});
+ 	}
+
+ 	$scope.movieSuggest = function(term){
+ 		MTservice.movieAutoSuggest(term).then(function(response){
+ 			response = response.data;
+ 			$scope.suggestedMovies = response.results;
+ 			
+ 		});
+ 	}
+
+ 	
 
  }]);

@@ -8,19 +8,17 @@
  * Controller of the mtViewApp
  */
  angular.module('mtViewApp')
- .controller('MainCtrl', ['$scope','$location','user', function ($scope,$location,user) {
+ .controller('MainCtrl', ['$scope','$location','UserService', function ($scope,$location,UserService) {
 
-
- 	var newUser =  user.initNewUser();
-
+ 	var newUser =  UserService.initNewUser();
  	newUser.then(function(response){
  		var data = response.data;
- 		user['user'] = data['new_user'];
- 		var isGuest = user.isGuest();
+ 		UserService.user = data.user;
+ 		var isGuest = UserService.isGuest();
  		if(isGuest){
- 			$location.url('/newUser');
+ 			$location.url('/main');
  			$location.replace();
  		}
- 	});
-
+ 	});	
+ 	
  }]);

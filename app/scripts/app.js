@@ -8,7 +8,7 @@
  *
  * Main module of the application.
  */
-angular
+var app = angular
   .module('mtViewApp', [
     'ngAnimate',
     'ngCookies',
@@ -23,7 +23,7 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/newUser',{
+      .when('/main',{
             templateUrl: 'views/landingpage.html',
             controller: 'LandingpageCtrl'
       })
@@ -35,3 +35,11 @@ angular
         redirectTo: '/'
       });
   });
+
+app.config([
+    '$httpProvider', 
+    function($httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    }
+]);

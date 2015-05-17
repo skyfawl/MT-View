@@ -8,17 +8,26 @@
  * Service in the mtViewApp.
  */
 angular.module('mtViewApp')
-  .service('user',['$http', function ($http){
-    		
+  .service('UserService',['$http', function ($http){
+    	
+        var BASE_URL = "http://metataste.com/do";
+        var loginCheck = "?card=loginUserCard&action=login";
+
     	this.user = {};
 
-
+        
     	this.initNewUser = function(){
-    		return $http.get('server_tmp_resources/user.json');
+    		return $http.get(BASE_URL + loginCheck);
     	};
 
     	this.signIn = function(usrnm,salt){
-    		console.log(usrnm + salt);
+            var userInfo = {
+                            "usrnm":usrnm,
+                            "pswd":salt,
+                            "card":"loginUserCard",
+                            "action":"mtauth"
+            };
+    		return $http.post(BASE_URL,userInfo);
     	};
 
     	this.signUp = function(userInfo){
