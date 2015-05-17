@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js">
-  <head>
+<head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
@@ -14,22 +14,40 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-  </head>
-  <body ng-app="mtViewApp">
+</head>
+<body ng-app="mtViewApp" >
+    <script type="text/ng-template" id="customTemplate.html">
+    <a>
+    <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+
+    <i>({{match.model.typ}})</i>
+    </a>
+    </script>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+      <![endif]-->
 
-    <!-- Add your site or application content here -->
-  
+      <!-- Add your site or application content here -->
+      <header>
 
-      <div ng-view="">
 
-      
+      </header>
+      <div ng-controller="HeaderCtrl" >
+        <input type="text" placeholder="Search Countries"
+        ng-model="selectedEntity"
+        typeahead="c as c.nm for c in entitySuggest($viewValue) | filter:$viewValue | limitTo:10"
+        typeahead-min-length='3'
+        typeahead-on-select='selectEntity($item, $model, $label)'
+        typeahead-template-url="customTemplate.html" style="width:350px;">  
+    </div>
 
-      </div>
+    <div ng-view="">
 
-   
+
+
+    </div>
+
+
 
 
     
@@ -57,15 +75,17 @@
     <script src="bower_components/restangular/dist/restangular.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+    <script src="bower_components/ui.bootstrap/typeahead/ui-bootstrap-custom-tpls-0.13.0.min.js"></script>
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/services/user.js"></script>
-        <script src="scripts/controllers/landingpage.js"></script>
-        <script src="scripts/services/mtservice.js"></script>
-        <script src="scripts/controllers/header.js"></script>
-        <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/services/user.js"></script>
+    <script src="scripts/controllers/landingpage.js"></script>
+    <script src="scripts/services/mtservice.js"></script>
+    <script src="scripts/controllers/header.js"></script>
+    <!-- endbuild -->
+
 </body>
 </html>

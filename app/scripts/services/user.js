@@ -13,7 +13,7 @@ angular.module('mtViewApp')
         var BASE_URL = "http://metataste.com/do";
         var loginCheck = "?card=loginUserCard&action=login";
 
-    	this.user = {};
+    	this.user = null;
 
         
     	this.initNewUser = function(){
@@ -27,9 +27,14 @@ angular.module('mtViewApp')
                             "card":"loginUserCard",
                             "action":"mtauth"
             };
-    		return $http.post(BASE_URL,userInfo);
+    		//return $http.post(BASE_URL,userInfo);
+            return $http.get(BASE_URL + loginCheck);
     	};
 
+        this.logOut = function(){
+            
+        }
+        
     	this.signUp = function(userInfo){
     		console.log(userInfo);
     	};

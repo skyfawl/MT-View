@@ -15,7 +15,8 @@ var app = angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ui.bootstrap'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -23,7 +24,7 @@ var app = angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/main',{
+      .when('/landing',{
             templateUrl: 'views/landingpage.html',
             controller: 'LandingpageCtrl'
       })
@@ -39,7 +40,7 @@ var app = angular
 app.config([
     '$httpProvider', 
     function($httpProvider) {
-        $httpProvider.defaults.useXDomain = true;
+        $httpProvider.defaults.useXDomain = false;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }
 ]);

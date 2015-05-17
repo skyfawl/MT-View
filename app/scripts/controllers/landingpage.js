@@ -14,8 +14,22 @@
  	$scope.wchd = [];
  	$scope.fav = [];
 
- 	$scope.user.fav = $scope.fav;
- 	$scope.user.wchd = $scope.wchd;
+ 	var user = UserService.getCurrentUser();
+
+ 	if(user){
+ 		$scope.user = user;
+ 	}else{
+ 		var newUser =  UserService.initNewUser();
+ 		newUser.then(function(response){
+ 			var data = response.data;
+ 			UserService.user = data.user;
+ 			$scope.user = UserService.user;
+ 			var isGuest = UserService.isGuest();
+ 			if(isGuest){
+ 				console.log("Is Guest")
+ 			}
+ 		});	
+ 	}
  	
  	MTservice.getLatestMovies().then(function(response){
  		response = response.data;
@@ -39,6 +53,6 @@
  		});
  	}
 
- 	
+
 
  }]);
