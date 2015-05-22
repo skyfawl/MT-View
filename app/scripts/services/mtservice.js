@@ -24,8 +24,8 @@ angular.module('mtViewApp')
     		return $http.get(BASE_URL + latestMovieUrl);
     	}
 
-    	this.autoSuggest = function(term){
-    		return  $http.get(BASE_URL + autoSuggestUrl + term);
+    	this.autoSuggest = function(term,canceller){
+    		return  $http.get(BASE_URL + autoSuggestUrl + term,{ "timeout": canceller.promise });
     	}
 
     	this.movieAutoSuggest = function(term){

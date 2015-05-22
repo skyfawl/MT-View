@@ -8,12 +8,12 @@
  * Controller of the mtViewApp
  */
 angular.module('mtViewApp')
-  .controller('HeaderCtrl',  ['$scope','$location','UserService', 'MTservice',function ($scope,$location,UserService,MTservice) {
+  .controller('HeaderCtrl',  ['$scope','$location','$q','UserService', 'MTservice',function ($scope,$location,$q,UserService,MTservice) {
     	
   	$scope.usrnm = "yamato";
   	$scope.salt = "moku";
   	$scope.signInError = false;
-
+    $scope.canceller = $q.defer();
     $scope.nonMovieEntities = ['kwrd','gnr','sgnr','actr','dir'];
 
     var keywordSearchQuery = {
@@ -42,10 +42,23 @@ angular.module('mtViewApp')
 
 
  	$scope.entitySuggest = function(term){
- 		 return MTservice.autoSuggest(term).then(function(response){
- 			response = response.data;
- 			return  response.results;
- 		});
+    if($scope.autoSuggestRequested){
+    // setTimeout(function() {
+      //         $scope.canceller.resolve('user cancelled');
+        //   },1000);
+     //$scope.autoSuggestRequested = false;
+    }
+    $scope.searchTerm = term;
+ 		 var autoSuggestRequest = MTservice.autoSuggest(term,$scope.canceller);
+     $scope.previousRequest = autoSuggestRequest;
+     $scope.autoSuggestRequested = true;
+     return autoSuggestRequest.then(function(response){
+      response = response.data;
+      $scope.autoSuggestRequested = false;
+      //console.log("Results for " +$scope.searchTerm);
+      return  response.results;
+    });
+
  	}
 
  	$scope.selectEntity = function(item, model, label){
@@ -56,8 +69,8 @@ angular.module('mtViewApp')
       keywordSearchQuery.want = entityType+"_"+selectedEntity._id;
       $location.path('/search/'+selectedEntity.nm).search(keywordSearchQuery);
     }else if("movie" === entityType){
-      $location.path("/movie/"+selectedEntity.urlnm);
-      $location.replace();
+      $location.path("/movie/"+selectedEntity.urlnm).search({});
+      
     }
  	}
  	//$scope.movieSuggest("god");
