@@ -32,6 +32,14 @@ var app = angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/search/:searchTerm', {
+        templateUrl: 'views/searchentity.html',
+        controller: 'SearchCtrl'
+      })
+      .when('/movie/:movieUrlnm', {
+        templateUrl: 'views/movie.html',
+        controller: 'MovieCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
