@@ -36,7 +36,7 @@ var app = angular
         templateUrl: 'views/searchentity.html',
         controller: 'SearchCtrl'
       })
-      .when('/movie/:movieUrlnm', {
+      .when('/movie/:movieId', {
         templateUrl: 'views/movie.html',
         controller: 'MovieCtrl'
       })

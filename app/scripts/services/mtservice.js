@@ -19,7 +19,7 @@ angular.module('mtViewApp')
       var kwrdSearchCard = "&kwrdSearchCard";
       var searchYearBoost = "&rstrt=1900&rend=2015";
 
-
+      var entityUrl = "?card=movieCard&action=find&entId="
     	this.getLatestMovies = function(){
     		return $http.get(BASE_URL + latestMovieUrl);
     	}
@@ -43,4 +43,9 @@ angular.module('mtViewApp')
         return  $http.get(BASE_URL+ uri);
       }
       
+      this.getEntity = function(entityId,card){
+        var movieUri = entityUrl + entityId ;
+        return $http.get(BASE_URL + movieUri);
+      }
+
   }]);
